@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click 'N Shop</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color:white;
+      background-size: cover;
+      color: #4b0049;
+    }
+
+    h1 {
+      margin-bottom: 50px;
+    }
+
+    .container.text-center h1 {
+      color: #FF69B4;
+      font-size: 3rem;
+    }
+
+    .menu-bar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background-color: #ffe4ec;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+      padding: 15px 0;
+    }
+
+    .menu-bar li {
+      position: relative;
+    }
+
+    .menu-bar a {
+      text-decoration: none;
+      color: #4b0049;
+      font-weight: 500;
+    }
+
+    .sub-menu-1 {
+      display: none;
+      position: absolute;
+      top: 100%;
+      background-color: #fff0f5;
+      box-shadow: 0px 8px 16px rgba(255, 105, 180, 0.3);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .menu-bar li:hover .sub-menu-1 {
+      display: block;
+    }
+
+    .search-bar input[type="text"] {
+      padding: 5px;
+      border-radius: 20px;
+      border: 1px solid #ff69b4;
+    }
+
+    .search-bar button {
+      padding: 5px 10px;
+      background-color: #ff69b4;
+      border: none;
+      color: white;
+      border-radius: 20px;
+      margin-left: 5px;
+    }
+
+    .categories .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .categories img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(255, 105, 180, 0.25);
+    }
+
+    .col-3 {
+      flex: 0 0 auto;
+      width: 300px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 15px;
+      transition: transform 0.3s;
+    }
+
+    .col-3:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+    }
+
+    h2 {
+      color: #ff69b4;
+      font-weight: bold;
+    }
+    .video-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 70px; /* space between videos */
+      margin-top: 50px;
+    }
+
+    video {
+      border: 2px solid #ccc; /* optional styling */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+ <div class="container-sm"></div>
+<div class="container-md"></div>
+<div class="container-lg"></div>
+<div class="container-xl"></div>
+<div class="container-xxl"></div>
+</div>
+  <div class="container text-center">
+    <h1>Click 'N Shop 🛍️</h1>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="menu-bar">
+    <ul class="nav justify-content-center">
+      <li>
+        <form class="d-flex search-bar" action="/search" method="get">
+          <input class="form-control" type="text" name="q" placeholder="Search product..">
+          <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+      </li>
+
+      <li><a class="nav-link active" href="#"><i class="fa fa-home"></i> Home</a></li>
+      <li>
+        <a class="nav-link" href="#"><i class="fa-solid fa-address-card"></i> About Us</a>
+        <div class="sub-menu-1">
+          <ul class="list-unstyled">
+            <li><a href="story.html">Our Story</a></li>
+            <li><a href="team.html">Team</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <a class="nav-link" href="#"><i class="fas fa-tshirt"></i> Clothes</a>
+        <div class="sub-menu-1">
+          <ul class="list-unstyled">
+            <li><a href="women.html">Women's Wear</a></li>
+            <li><a href="men.html">Men's Wear</a></li>
+            
+          </ul>
+        </div>
+      </li>
+
+      <li><a class="nav-link" href="help.html"><i class="fa-solid fa-phone"></i> Help Center</a></li>
+      <li><a class="nav-link" href="w.html"><i class="far fa-heart"></i> Wishlist</a></li>
+      <li><a class="nav-link" href="in.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      <li><a class="nav-link" href="#"><i class="fas fa-receipt"></i> My Orders</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Women's Wear -->
+  <div class="container mt-5">
+    <h2 class="text-center display-5">Women's Wear 🎀</h2>
+    <div class="video-wrapper">
+    <video width="400" height="300" controls autoplay loop muted>
+      <source src="C:\Users\khush\Downloads\istockphoto-1349069009-640_adpp_is.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <video width="400" height="300" controls autoplay loop muted>
+      <source src="C:\Users\khush\Downloads\istockphoto-1493725196-640_adpp_is.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+  </div>
+    <div class="categories">
+      <div class="row justify-content-center mt-3">
+        <!-- Image blocks remain unchanged -->
+        <div class="col-3"><img src="https://i.pinimg.com/736x/9c/8c/73/9c8c73860e78879199d9702f3a482133.jpg" alt="Women's 1" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/736x/ac/57/ac/ac57acc84ae6b811fb35fe3fa04b7483.jpg" alt="Women's 2" height="300" width="250"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/736x/94/7c/f0/947cf07167c4d9e42da60ee7459e4348.jpg" alt="Women's 3" height="300" width="300"></div>
+        <div class="col-3"><img src=" https://i.pinimg.com/736x/b6/65/4d/b6654d92406c0c5d95a0897a9f4771c7.jpg " alt="Women's 4" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/736x/66/f8/13/66f813e3e84789f2ae4f6e968054ca25.jpg" alt="Women's 5" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/736x/37/f4/2f/37f42fcfe2058b2893c393320071bfe6.jpg" alt="Women's 6" height="300" width="300"></div>
+         <div class="col-3"><img src="https://i.pinimg.com/736x/e9/69/ae/e969aea81a4290c87fe9308bff10cb03.jpg"alt="Women's 6" height="300" width="300"></div>
+         <div class="col-3"><img src="https://i.pinimg.com/736x/f5/30/35/f53035be196aff6538bbd9ab4df504e7.jpg"alt="Women's 6" height="300" width="300"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Men's Wear -->
+  <div class="container mt-5">
+    <h2 class="text-center display-5">Men's Wear 👕 </h2>
+    <div class="video-wrapper">
+    <video width="400" height="300" controls autoplay loop muted>
+      <source src="C:\Users\khush\Downloads\istockphoto-1494332452-640_adpp_is.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <video width="400" height="300" controls autoplay loop muted>
+      <source src="C:\Users\khush\Downloads\istockphoto-1147624430-640_adpp_is.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+  </div>
+    <div class="categories">
+      <div class="row justify-content-center mt-4">
+        <!-- Image blocks remain unchanged -->
+        <div class="col-3"><img src="C:\Users\khush\OneDrive\Desktop\picturess\ff.jpg" alt="Men's 1" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/736x/67/dc/c5/67dcc5c5515505fe0f44476d4600866c.jpg" alt="Men's 2" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/736x/e6/75/6e/e6756e4eb8752e6793630c91f83a0845.jpg" alt="Men's 3" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/1200x/3c/9c/38/3c9c3832fc41df8e6a42155a29be4070.jpg" alt="Men's 4" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/736x/9f/56/b5/9f56b5491605223f1bd2b177b867c462.jpg" alt="Men's 5" height="300" width="300"></div>
+        <div class="col-3"><img src="C:\Users\khush\OneDrive\Desktop\picturess\y.jpg" alt="Men's 6" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/736x/22/23/ef/2223ef99df60e60204483f4a0f2e1932.jpg" alt="Men's 5" height="300" width="300"></div>
+        <div class="col-3"><img src="https://i.pinimg.com/1200x/33/f3/d4/33f3d4e6cf81e544cfe2bba65440562f.jpg" alt="Men's 6" height="300" width="300"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

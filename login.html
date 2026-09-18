@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click 'N Shop - Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      background-image: url('https://images.unsplash.com/photo-1618354691373-62d4a9ed9cb2?auto=format&fit=crop&w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 380px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 182, 193, 0.4);
+      animation: fadeIn 0.8s ease-in-out;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+
+    .brand {
+      font-size: 24px;
+      color: #ff1493;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 25px;
+      color: #d63384;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #d63384;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ffc0cb;
+      border-radius: 10px;
+      background-color: #fff;
+      font-size: 15px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff69b4;
+      box-shadow: 0 0 0 2px rgba(255, 20, 147, 0.2);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #ff1493;
+      border: none;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      position: relative;
+    }
+
+    .login-btn:hover {
+      background-color: #e0118a;
+      transform: translateY(-2px);
+    }
+
+    .login-btn.loading {
+      pointer-events: none;
+      background-color: #ccc;
+    }
+
+    .spinner {
+      border: 3px solid #fff;
+      border-top: 3px solid #ff1493;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 1s linear infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+
+    .login-btn.loading .spinner {
+      display: block;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .signup {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .signup a {
+      color: #ff1493;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 18px;
+      color: #777;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    @media (max-width: 400px) {
+      .login-container {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Logo" class="logo">
+    <div class="brand">Click 'N Shop 🛍️</div>
+    <h2>Login to Continue 🛒</h2>
+    
+    <form onsubmit="return validateForm()">
+      <label for="username">👤 Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="mobile">📱 Mobile Number:</label>
+      <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required placeholder="10-digit number">
+
+      <label for="password">🔒 Password:</label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+      <button type="submit" class="login-btn" id="loginBtn">
+        🔓 Login
+        <div class="spinner" id="spinner"></div>
+      </button>
+    </form>
+
+    <div class="signup">
+      Don't have an account? <a href="#">Sign up</a>
+    </div>
+
+    <div class="footer">
+      © 2025 Click 'N Shop
+    </div>
+  </div>
+
+  <script>
+    function validateForm() {
+      const username = document.getElementById("username").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const mobileRegex = /^[0-9]{10}$/;
+      const loginBtn = document.getElementById("loginBtn");
+
+      if (username === "") {
+        alert("Username is required.");
+        return false;
+      }
+
+      if (!mobileRegex.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return false;
+      }
+
+      if (password === "") {
+        alert("Password is required.");
+        return false;
+      }
+
+      // Show loading spinner
+      loginBtn.classList.add("loading");
+
+      // Simulate loading before redirect
+      setTimeout(() => {
+        window.location.href = "nyka.html"; // your destination page
+      }, 2000);
+
+      return false; // prevent actual form submission
+    }
+  </script>
+
+</body>
+</html>

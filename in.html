@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click 'n Shop - Checkout Flow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      color: #4b0049;
+    }
+    .cart-header {
+      background-color: #ffecf2;
+      padding: 30px 0;
+      text-align: center;
+    }
+    .cart-header h2 {
+      color: #ff69b4;
+      font-weight: bold;
+    }
+    .cart-item {
+      border-bottom: 1px solid #ffd6e8;
+      padding: 20px 0;
+    }
+    .cart-item img {
+      width: 100px;
+      height: auto;
+      border-radius: 8px;
+    }
+    .cart-total {
+      background-color: #fff0f7;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .checkout-btn, .continue-btn, .place-order-btn {
+      background-color: #ff69b4;
+      color: white;
+      font-weight: bold;
+    }
+    .checkout-btn:hover, .continue-btn:hover, .place-order-btn:hover {
+      background-color: #e855a0;
+    }
+    .login-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .remove-btn {
+      background-color: #dc3545 !important;
+      color: white;
+    }
+    .btn-secondary {
+      background-color: #bbb;
+      color: #333;
+      font-weight: 500;
+    }
+    .btn-secondary:hover {
+      background-color: #999;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .cart-item img {
+        width: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Button -->
+<button class="btn btn-outline-primary login-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
+  <i class="fas fa-user"></i> Login
+</button>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">User Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control mb-3" id="username" placeholder="Enter username">
+        <button class="btn btn-primary w-100" onclick="login()">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 1: Cart Section -->
+<div id="cartSection">
+  <div class="cart-header">
+    <h2>🛍️ Your Shopping Cart</h2>
+    <p class="text-muted">Review your items before checkout</p>
+    <div id="welcomeText" class="text-success fw-bold"></div>
+  </div>
+  <div class="container mt-4">
+    <div class="row cart-item align-items-center" data-price="1299">
+      <div class="col-3 col-md-2 text-center">
+        <img src="https://i.imgur.com/qNEwEd1.jpeg" alt="Product 1">
+      </div>
+      <div class="col-5 col-md-3">
+        <h5 class="item-name">Floral Dress</h5>
+        <p class="text-muted item-desc">Size: M | Pink</p>
+      </div>
+      <div class="col-2 text-center">
+        <input type="number" value="1" class="form-control quantity" min="1">
+      </div>
+      <div class="col-2 text-center price">₹1299</div>
+      <div class="col-12 col-md-2 text-center mt-2 mt-md-0">
+        <button class="btn remove-btn">Remove</button>
+      </div>
+    </div>
+
+    <div class="row cart-item align-items-center" data-price="899">
+      <div class="col-3 col-md-2 text-center">
+        <img src="https://i.imgur.com/r6Snxk4.jpeg" alt="Product 2">
+      </div>
+      <div class="col-5 col-md-3">
+        <h5 class="item-name">Stylish Handbag</h5>
+        <p class="text-muted item-desc">Color: Rose Gold</p>
+      </div>
+      <div class="col-2 text-center">
+        <input type="number" value="1" class="form-control quantity" min="1">
+      </div>
+      <div class="col-2 text-center price">₹899</div>
+      <div class="col-12 col-md-2 text-center mt-2 mt-md-0">
+        <button class="btn remove-btn">Remove</button>
+      </div>
+    </div>
+
+    <div class="row justify-content-end">
+      <div class="col-md-5">
+        <div class="cart-total shadow-sm">
+          <h5 class="mb-3">Order Summary</h5>
+          <div class="d-flex justify-content-between">
+            <span>Subtotal</span>
+            <span id="subtotal">₹0</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Shipping</span>
+            <span>Free</span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between fw-bold">
+            <span>Total</span>
+            <span id="total">₹0</span>
+          </div>
+          <div class="d-grid mt-3">
+            <button class="btn checkout-btn" onclick="goToReview()">Proceed to Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2: Review Section -->
+<div id="reviewSection" class="hidden">
+  <div class="cart-header">
+    <h2>📦 Review Your Order</h2>
+    <p class="text-muted">Please check all details before continuing</p>
+  </div>
+  <div class="container mt-4" id="reviewItems"></div>
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-md-5">
+        <div class="cart-total shadow-sm">
+          <h5 class="mb-3">Final Summary</h5>
+          <div class="d-flex justify-content-between">
+            <span>Total</span>
+            <span id="reviewTotal">₹0</span>
+          </div>
+          <div class="d-grid mt-3">
+            <button class="btn continue-btn" onclick="goToPayment()">Continue to Payment</button>
+          </div>
+          <div class="d-grid mt-2">
+            <button class="btn btn-secondary" onclick="goBackToCart()">← Back to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 3: Payment Method Section -->
+<!-- Step 3: Payment Method Section -->
+<!-- Step 3: Payment Method Section -->
+<div id="paymentSection" class="hidden">
+  <div class="cart-header">
+    <h2>💳 Select Payment Method</h2>
+    <p class="text-muted">🛡️ Safe & Secure Payments</p>
+  </div>
+  <div class="container mt-4">
+    <form>
+      <!-- Credit/Debit Card -->
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="radio" name="paymentMethod" id="card" value="Credit/Debit Card" checked>
+        <label class="form-check-label" for="card">
+          💳 Credit/Debit Card
+        </label>
+      </div>
+
+      <!-- Cash on Delivery -->
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="Cash on Delivery">
+        <label class="form-check-label" for="cod">
+          🧾 Cash on Delivery <img src="https://cdn-icons-png.flaticon.com/128/4280/4280401.png" alt="COD" width="20">
+        </label>
+      </div>
+
+      <!-- UPI Payment -->
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="radio" name="paymentMethod" id="upi" value="Online Payment (UPI)">
+        <label class="form-check-label" for="upi">
+          📱 Online Payment (UPI)
+        </label>
+      </div>
+
+      <!-- UPI App & ID -->
+      <div id="upiSection" class="hidden mt-3 ms-3">
+        <p>🛍️ Choose your UPI App:</p>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="upiApp" value="Google Pay" id="gpay">
+          <label class="form-check-label" for="gpay">
+            <img src="https://static.vecteezy.com/system/resources/previews/017/221/854/original/google-pay-logo-transparent-free-png.png" width="25"> Google Pay
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="upiApp" value="PhonePe" id="phonepe">
+          <label class="form-check-label" for="phonepe">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.tuYalZe2SOHuvjtZkDDJ5gHaFf?pid=Api&P=0&h=180" width="25"> PhonePe
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="upiApp" value="Paytm" id="paytm">
+          <label class="form-check-label" for="paytm">
+            <img src="https://logosmarken.com/wp-content/uploads/2020/11/Paytm-Logo.png" width="25"> Paytm
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="upiApp" value="BHIM" id="bhim">
+          <label class="form-check-label" for="bhim">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.8KUyRIVobXlU3pm0yIf6-AHaEK?pid=Api&P=0&h=180" width="25"> BHIM
+          </label>
+        </div>
+
+        <div class="mt-3">
+          <label for="upiId" class="form-label">🆔 Enter UPI ID:</label>
+          <input type="text" id="upiId" class="form-control" placeholder="e.g. yourname@bank">
+        </div>
+      </div>
+    </form>
+
+    <!-- Order Summary -->
+    <div class="cart-total shadow-sm mt-4">
+      <h5>📦 Order Summary</h5>
+      <div class="d-flex justify-content-between fw-bold">
+        <span>Total Payable</span>
+        <span id="paymentTotal">₹0</span>
+      </div>
+      <div class="d-grid mt-3">
+        <button class="btn place-order-btn" onclick="placeOrder()">✅ Place Order</button>
+      </div>
+      <div class="d-grid mt-2">
+        <button class="btn btn-secondary" onclick="goBackToReview()">← Back to Review</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Order Confirmation Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title">Order Confirmed</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+        <p>🎉 Thank you for your purchase! Your order has been successfully placed.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function updateTotal() {
+  let total = 0;
+  document.querySelectorAll(".cart-item").forEach(item => {
+    const price = parseInt(item.getAttribute("data-price"));
+    const qty = parseInt(item.querySelector(".quantity").value);
+    const itemTotal = price * qty;
+    item.querySelector(".price").textContent = `₹${itemTotal}`;
+    total += itemTotal;
+  });
+  document.getElementById("subtotal").textContent = `₹${total}`;
+  document.getElementById("total").textContent = `₹${total}`;
+}
+document.querySelectorAll(".quantity").forEach(input => {
+  input.addEventListener("input", updateTotal);
+});
+document.querySelectorAll(".remove-btn").forEach(button => {
+  button.addEventListener("click", function () {
+    this.closest(".cart-item").remove();
+    updateTotal();
+  });
+});
+function login() {
+  const name = document.getElementById("username").value;
+  if (name.trim() !== "") {
+    document.getElementById("welcomeText").textContent = `Welcome, ${name}!`;
+    bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+  }
+}
+function goToReview() {
+  const reviewItems = document.getElementById("reviewItems");
+  reviewItems.innerHTML = "";
+  let total = 0;
+  document.querySelectorAll(".cart-item").forEach(item => {
+    const name = item.querySelector(".item-name").textContent;
+    const desc = item.querySelector(".item-desc").textContent;
+    const qty = item.querySelector(".quantity").value;
+    const price = parseInt(item.getAttribute("data-price"));
+    const imgSrc = item.querySelector("img").src;
+    const totalPrice = price * qty;
+    total += totalPrice;
+    reviewItems.innerHTML += `
+      <div class="row cart-item align-items-center">
+        <div class="col-3 text-center">
+          <img src="${imgSrc}" class="img-fluid" style="width: 90px;">
+        </div>
+        <div class="col-6">
+          <h5>${name}</h5>
+          <p class="text-muted">${desc}</p>
+          <p>Quantity: ${qty}</p>
+        </div>
+        <div class="col-3 text-end">₹${totalPrice}</div>
+      </div>`;
+  });
+  document.getElementById("reviewTotal").textContent = `₹${total}`;
+  document.getElementById("paymentTotal").textContent = `₹${total}`;
+  document.getElementById("cartSection").classList.add("hidden");
+  document.getElementById("reviewSection").classList.remove("hidden");
+}
+function goToPayment() {
+  document.getElementById("reviewSection").classList.add("hidden");
+  document.getElementById("paymentSection").classList.remove("hidden");
+}
+function goBackToCart() {
+  document.getElementById("reviewSection").classList.add("hidden");
+  document.getElementById("cartSection").classList.remove("hidden");
+}
+function goBackToReview() {
+  document.getElementById("paymentSection").classList.add("hidden");
+  document.getElementById("reviewSection").classList.remove("hidden");
+}
+
+// Show/hide UPI section
+document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const upiSection = document.getElementById("upiSection");
+    upiSection.classList.toggle("hidden", radio.value !== "Online Payment (UPI)");
+  });
+});
+
+function validateUpiId(id) {
+  return /^[\w.-]+@[\w]+$/.test(id);
+}
+
+function placeOrder() {
+  const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+  if (method === "Online Payment (UPI)") {
+    const upiApp = document.querySelector('input[name="upiApp"]:checked');
+    const upiId = document.getElementById("upiId").value.trim();
+    if (!upiApp) {
+      alert("Please select a UPI app.");
+      return;
+    }
+    if (!validateUpiId(upiId)) {
+      alert("Please enter a valid UPI ID (e.g., name@bank).");
+      return;
+    }
+    const success = Math.random() < 0.85;
+    if (!success) {
+      alert(`❌ Payment failed via ${upiApp.value}. Please try again.`);
+      return;
+    }
+    showConfirmation(method + " via " + upiApp.value);
+  } else {
+    showConfirmation(method);
+  }
+}
+
+function showConfirmation(methodUsed) {
+  const modal = new bootstrap.Modal(document.getElementById('orderModal'));
+  document.querySelector("#orderModal .modal-body").innerHTML = `
+    <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+    <p>🎉 Thank you for your purchase! Your order has been placed.</p>
+    <p><strong>Payment Method:</strong> ${methodUsed}</p>`;
+  modal.show();
+}
+
+updateTotal();
+document.addEventListener("DOMContentLoaded", () => {
+  const upiRadio = document.getElementById("upi");
+  const upiSection = document.getElementById("upiSection");
+  const paymentRadios = document.querySelectorAll("input[name='paymentMethod']");
+
+  paymentRadios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      upiSection.classList.toggle("hidden", !upiRadio.checked);
+    });
+  });
+});
+</script>
+
+</body>
+</html>
